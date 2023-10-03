@@ -30,6 +30,16 @@ nfa.add_final_state(A_4_4_Carulla)
 nfa.add_final_state(A_3_3_Caminar)
 
 
+
+
+
+
+
+
+
+
+
+
 from pyformlang.finite_automaton import State
 from pyformlang.finite_automaton import DeterministicFiniteAutomaton as DFA
 #AUTOMATA CARULLA
@@ -146,5 +156,60 @@ while(estado_actual not in estados_aceptacion):
 print(ruta)
 print("aceptacion de ruta: ", dfa.accepts(ruta))
     
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#generador de historias a partir de una gramatica
+
+from pyformlang.cfg import CFG, Production, Variable, Terminal
+import random
+
+# Definir una gramática independiente del contexto (CFG)
+S = Variable("S")
+
+
+gramatica2 = CFG.from_text("""
+  S -> A B
+  A -> a A | a
+  B -> b B | b
+""")
+
+
+# Generar una cadena de acuerdo con la CFG
+def generar_cadena(cfg, simbolo_inicial):
+    cadena = ""
+    pila = [simbolo_inicial]
+
+    while pila:
+
+        simbolo_actual = pila.pop()
+        print("simbolo actual: ", simbolo_actual)
+
+        if isinstance(simbolo_actual, Terminal):
+            cadena += simbolo_actual.value
+            print("cadena hasta el momento: ", cadena)
+        elif isinstance(simbolo_actual, Variable):
+            producciones_posibles = [p for p in cfg.productions if p.head == simbolo_actual]
+            print("producciones posibles: ", producciones_posibles)
+            if producciones_posibles:
+                produccion = random.choice(producciones_posibles)
+                pila.extend(reversed(produccion.body))
+                print("produccion escogida y anadida a la pila: ", produccion.body)
+        print()
+
+    return cadena
+
+cadena_generada = generar_cadena(gramatica2, S)
+print("Cadena generada:", cadena_generada)
     
