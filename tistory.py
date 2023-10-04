@@ -1,5 +1,5 @@
 #!pip install pyformlang
-from pyformlang.finite_automaton import DeterministicFiniteAutomaton, State
+from pyformlang.finite_automaton import State
 
 from pyformlang.finite_automaton import NondeterministicFiniteAutomaton
 
@@ -118,54 +118,34 @@ dfa.add_transitions([(q0, 'a', q1), (q1, 'carulla', B_1_carulla),
                      ])
 
 
-estado_actual = q0
-
-dfaDict=dfa.to_dict()
-
-for i in dfaDict: 
-    print(i) #printea la key. 
-    print(dfaDict.get(i)) #printea el valor asociado a esa key
+def playStory(automaton = DFA, q0 = State, winning_state = State, acceptance_states = [], losing_states=[]): 
+    automatonDict=automaton.to_dict()
     
-#print(dfaDict)
-print()
-
-estado_actual=q0
-i=0
-ruta=[]
-while(estado_actual not in estados_aceptacion):
-    inter=dfaDict.get(estado_actual)
-    print("opciones: ", inter)
-    entrada=input("entrada: ")
-    try:
-        for i in inter: 
-            if(i==entrada): 
-                estado_actual=inter.get(i)
-                print("nuevo estado: ", estado_actual)
-                ruta.append(entrada)
+    actual_state = q0
+    path=[]
+    
+    while(actual_state not in acceptance_states):
+        options=automatonDict.get(actual_state)
+        print("caminos: ", options)
+        entry=input("entrada: ")
+        try:
+            for i in options: 
+                if(i==entry): 
+                    actual_state=options.get(i)
+                    print("nuevo estado: ", actual_state)
+                    path.append(entry)   
+        except: 
+            print("entrada erronea")
             
-    except: 
-        print("entrada erronea")
-        
-    if(estado_actual==q0): 
-        print("volviste al inicio")
-    elif(estado_actual in estados_perdedores): 
-        print("no llegaste a tu casa")
-    elif(estado_actual==estado_ganador): 
-        print("llegaste a tu casa")
+        if(actual_state==q0): 
+            print("volviste al inicio")
+        elif(actual_state in losing_states): 
+            print("no llegaste a tu casa")
+        elif(actual_state==winning_state): 
+            print("llegaste a tu casa")
 
-print(ruta)
-print("aceptacion de ruta: ", dfa.accepts(ruta))
-    
-
-
-
-
-
-
-
-
-
-
+    print(path)
+    print("aceptacion de ruta: ", dfa.accepts(path))
 
 
 
@@ -210,6 +190,8 @@ def generar_cadena(cfg, simbolo_inicial):
 
     return cadena
 
+
+playStory(dfa, q0, estado_ganador, estados_aceptacion, estados_perdedores)
 cadena_generada = generar_cadena(gramatica2, S)
 print("Cadena generada:", cadena_generada)
     
