@@ -165,7 +165,62 @@ while(estado_actual not in estados_aceptacion):
 print(ruta)
 print("aceptacion de ruta: ", dfa1.accepts(ruta))
     
+#AUTOMATA DE ESTUDIO(Camino C)
 
+q0 = State('q0')
+C_1_Estudiar = State('C_1_Estudiar')
+C_2_Biblioteca = State('C_2_Biblioteca')
+C_3_Ex = State ('C_3_Ex')
+C_4_Estudio = State ('C_4_Estudio')
+C_5_MasEstudio = State ('C_5_MasEstudio')
+C_6_Cita = State ('C_6_Cita')
+C_7_CasaEx = State ('C_7_CasaEx')
+C_8_RechazoEx = State ('C_8_RechazoEx')
+C_9_amigos =State('C_9_amigos')
+C_10_GanasPartido = State ('C_10_GanasPartido')
+C_11_Alistandote = State ('C_11_Alistandote')
+C_12_1060 = State ('C_12_Partido')
+C_13_sagsa = State ('C_13_Partido')
+C_14_Culito = State ('C_14_Culito')
+C_15_CaminoCasa = State ('C_15_CaminoCasa')
+C_16_Carro = State ('C_16_Carro')
+C_17_Borracho = State ('C_17_Borracho')
+C_18_Vecino =State('C_18_Vecino')
+C_19_Transporte = State ('C_19_Transporte')
+C_20_Cupo = State ('C_20_Cupo')
+C_21_Espera = State ('C_23_Espera')
+C_22_Hospital = State ('C_22_Hospital')
+
+nfaC = NondeterministicFiniteAutomaton()
+
+nfaC.add_transitions([
+    (q0,'estudiar', C_1_Estudiar),
+    (C_1_Estudiar, 'ir a la biblioteca', C_2_Biblioteca),(C_2_Biblioteca, 'saludar', C_3_Ex), (C_2_Biblioteca, 'ignorar', C_4_Estudio), (C_3_Ex,'aceptar', C_6_Cita), (C_6_Cita, 'aceptar', C_7_CasaEx),  (C_6_Cita, 'rechazar', C_8_RechazoEx),
+    (C_3_Ex, 'buscar estudiar', C_5_MasEstudio), (C_5_MasEstudio, 'ir con ex', C_6_Cita), 
+    (C_3_Ex, 'buscar como irte', C_19_Transporte),
+    (C_4_Estudio, 'buscar estudiar', C_5_MasEstudio), (C_5_MasEstudio, 'solicitar servicio', C_16_Carro),
+    (C_4_Estudio, 'buscar transporte', C_19_Transporte),
+
+    (C_1_Estudiar, 'saludar a mis amigos', C_9_amigos), (C_9_amigos, 'ir con ellos', C_10_GanasPartido), (C_9_amigos, 'buscar transporte', C_16_Carro), 
+    (C_10_GanasPartido, 'aceptar', C_11_Alistandote), (C_11_Alistandote, '1060', C_12_1060), (C_12_1060, 'sagsa', C_13_sagsa), (C_12_1060, 'casa', C_16_Carro), (C_12_1060, 'quedarte', C_17_Borracho),
+    (C_11_Alistandote, 'sagsa', C_13_sagsa), (C_13_sagsa, 'culito', C_14_Culito), (C_13_sagsa, 'amigos', C_17_Borracho),
+    (C_10_GanasPartido, 'te vas', C_15_CaminoCasa), (C_15_CaminoCasa, 'irte con vencino', C_18_Vecino), (C_15_CaminoCasa, 'pedir carro', C_16_Carro),
+
+    (C_1_Estudiar, 'buscar transporte', C_19_Transporte), (C_19_Transporte, 'pedir carro', C_16_Carro), 
+    (C_19_Transporte, 'esperar bus', C_21_Espera), (C_21_Espera, 'biblioteca', C_2_Biblioteca), (C_21_Espera, 'buscar cupo', C_20_Cupo), (C_20_Cupo, 'buscar cupo', C_22_Hospital), (C_20_Cupo, 'buscar cupo', C_16_Carro),
+    (C_19_Transporte, 'buscar cupo', C_20_Cupo)
+    ])
+
+nfaC.add_start_state(q0)
+nfaC.add_final_state(C_8_RechazoEx)
+nfaC.add_final_state(C_7_CasaEx)
+nfaC.add_final_state(C_16_Carro)
+nfaC.add_final_state(C_14_Culito)
+nfaC.add_final_state(C_17_Borracho)
+nfaC.add_final_state(C_18_Vecino)
+nfaC.add_final_state(C_22_Hospital)
+
+dfa2=nfaC.to_deterministic()
 
 
 
