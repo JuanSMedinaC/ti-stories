@@ -1,48 +1,8 @@
 #!pip install pyformlang
 from pyformlang.finite_automaton import State
-
-from pyformlang.finite_automaton import NondeterministicFiniteAutomaton
-q0=State('q0')
-A_1_Seleccion_de_transporte = State('A_1_Seleccion_de_transporte')
-A_2_MIO = State('A_2_MIO')
-A_3_1_Cupo = State ('A_3_1_Cupo')
-A_3_2_Cupo = State ('A_3_2_Cupo')
-A_3_3_Caminar = State ('A_3_3_Caminar')
-A_4_Amigo = State ('A_4_Amigo')
-A_4_1_1060 = State ('A_4_1_1060')
-A_4_3_Sagsa =State('A_4_3_Sagsa')
-A_4_4_Carulla = State ('A_4_4_Carulla')
-
-nfa = NondeterministicFiniteAutomaton()
-
-nfa.add_transitions(
-    [(q0,'transporte',A_1_Seleccion_de_transporte),(A_1_Seleccion_de_transporte, 'MIO', A_2_MIO),(A_1_Seleccion_de_transporte, 'cupo', A_3_1_Cupo), (A_1_Seleccion_de_transporte, 'amigo', A_4_Amigo),
-     (A_2_MIO,'MIO', A_2_MIO),(A_2_MIO, 'cupo', A_3_1_Cupo),(A_3_1_Cupo, 'dormir', A_3_2_Cupo), (A_3_1_Cupo, 'amigo', A_4_Amigo),  (A_2_MIO, 'amigo', A_4_Amigo),
-     (A_4_Amigo, '1060', A_4_1_1060),(A_4_Amigo, 'sagsa', A_4_3_Sagsa), (A_4_Amigo, 'casa', A_4_4_Carulla),
-     (A_4_1_1060, 'fiesta', A_4_1_1060),(A_4_1_1060, 'salir', A_4_3_Sagsa), (A_4_3_Sagsa, 'fiesta', A_4_3_Sagsa), (A_4_3_Sagsa, 'salir', A_4_4_Carulla),
-     (A_3_2_Cupo, 'casa', A_3_3_Caminar), (A_3_2_Cupo, 'amigo', A_4_Amigo)])
-
-nfa.add_start_state(q0)
-nfa.add_final_state(A_4_1_1060)
-nfa.add_final_state(A_4_3_Sagsa)
-nfa.add_final_state(A_4_4_Carulla)
-nfa.add_final_state(A_3_3_Caminar)
-
-dfa1=nfa.to_deterministic()
-
-
-
-
-
-
-
-
-
-
-
-from pyformlang.finite_automaton import State
 from pyformlang.finite_automaton import DeterministicFiniteAutomaton as DFA
-#AUTOMATA CARULLA
+
+
 
 q0=State('q0')
 q1=State('q1')
@@ -65,20 +25,31 @@ B_16_partida=State('B_16_partida')
 B_17_uber=State('B_17_uber')
 B_18_solo=State('B_18_solo')
 B_19_muerte=State('B_19_muerte')
+A_1_Seleccion_de_transporte = State('A_1_Seleccion_de_transporte')
+A_2_MIO = State('A_2_MIO')
+A_3_Cupo = State ('A_3_Cupo')
+A_3_1_Cupo = State ('A_3_1_Cupo')
+A_3_2_Cupo = State ('A_3_2_Cupo')
+A_3_3_Caminar = State ('A_3_3_Caminar')
+A_4_Amigo = State ('A_4_Amigo')
+A_4_1_1060 = State ('A_4_1_1060')
+A_4_3_Sagsa =State('A_4_3_Sagsa')
+A_4_4_Carulla = State ('A_4_4_Carulla')
+
 
 
 dfa= DFA(
-    states={q0, q1, B_1_carulla, B_2_nuevosAmigos, B_3_celular, B_4_cervezas, B_5_retirada, B_6_vomito, B_7_taxi, B_8_dormir, B_9_caminar, B_10_montarse, B_11_ignorado, B_12_robo, B_13_final, B_14_amigo, B_15_fifa, B_16_partida, B_17_uber, B_18_solo, B_19_muerte},
-    input_symbols={'carulla', 'socializar', 'aceptar', 'negarse', 'retirarse', 'tomar', 'dormir', 'taxi', 'caminar', 'montarse', 'ignorar', 'golpear', 'saltar', 'seguir', 'celular', 'uber', 'amigo', 'dedo', 'fifa', 'revancha'},
+    states={q0, q1, B_1_carulla, B_2_nuevosAmigos, B_3_celular, B_4_cervezas, B_5_retirada, B_6_vomito, B_7_taxi, B_8_dormir, B_9_caminar, B_10_montarse, B_11_ignorado, B_12_robo, B_13_final, B_14_amigo, B_15_fifa, B_16_partida, B_17_uber, B_18_solo, B_19_muerte, A_1_Seleccion_de_transporte , A_2_MIO , A_3_Cupo , A_3_1_Cupo , A_3_2_Cupo , A_3_3_Caminar , A_4_Amigo , A_4_1_1060 , A_4_3_Sagsa , A_4_4_Carulla},
+    input_symbols={'carulla', 'socializar', 'aceptar', 'negarse', 'retirarse', 'tomar', 'dormir', 'taxi', 'caminar', 'montarse', 'ignorar', 'golpear', 'saltar', 'seguir', 'celular', 'uber', 'amigo', 'dedo', 'fifa', 'revancha', 'transporte', 'MIO', 'cupo', '1060', 'sagsa', 'casa', 'fiesta', 'salir'},
     start_state=q0,
-    final_states={B_6_vomito, B_7_taxi, B_8_dormir, B_11_ignorado, B_12_robo, B_13_final, B_15_fifa, B_18_solo, B_19_muerte} #solo el 13 es ganador
+    final_states={B_6_vomito, B_7_taxi, B_8_dormir, B_11_ignorado, B_12_robo, B_15_fifa, B_18_solo, B_19_muerte, A_4_1_1060, A_4_3_Sagsa, A_4_4_Carulla}
 )
 
-estados_perdedores=[B_6_vomito, B_7_taxi, B_8_dormir, B_11_ignorado, B_12_robo, B_15_fifa, B_18_solo, B_19_muerte]
-estado_ganador=B_13_final
+estados_perdedores=[B_6_vomito, B_7_taxi, B_8_dormir, B_11_ignorado, B_12_robo, B_15_fifa, B_18_solo, B_19_muerte, A_4_1_1060, A_4_3_Sagsa, A_4_4_Carulla]
+estados_ganadores=[B_13_final, A_3_3_Caminar]
 estados_aceptacion=[]
 estados_aceptacion.extend(estados_perdedores)
-estados_aceptacion.append(estado_ganador)
+estados_aceptacion.extend(estados_ganadores)
 
 dfa.add_transitions([(q0, 'a', q1), (q1, 'carulla', B_1_carulla), 
                      (B_1_carulla, 'socializar', B_2_nuevosAmigos), 
@@ -114,11 +85,18 @@ dfa.add_transitions([(q0, 'a', q1), (q1, 'carulla', B_1_carulla),
                      (B_14_amigo, 'revancha', B_16_partida),
                      
                      (B_16_partida, 'caminar', B_9_caminar), 
-                     (B_16_partida, 'taxi', B_7_taxi)
+                     (B_16_partida, 'taxi', B_7_taxi),
+                     
+                     (q0, 'a', q1), 
+                     (q1,'transporte',A_1_Seleccion_de_transporte),(A_1_Seleccion_de_transporte, 'MIO', A_2_MIO),(A_1_Seleccion_de_transporte, 'cupo', A_3_1_Cupo), (A_1_Seleccion_de_transporte, 'amigo', A_4_Amigo),
+                    (A_2_MIO,'MIO', A_2_MIO),(A_2_MIO, 'cupo', A_3_1_Cupo),(A_3_1_Cupo, 'dormir', A_3_2_Cupo), (A_3_1_Cupo, 'amigo', A_4_Amigo),  (A_2_MIO, 'amigo', A_4_Amigo),
+                    (A_4_Amigo, '1060', A_4_1_1060),(A_4_Amigo, 'sagsa', A_4_3_Sagsa), (A_4_Amigo, 'casa', A_4_4_Carulla),
+                    (A_4_1_1060, 'fiesta', A_4_1_1060),(A_4_1_1060, 'salir', A_4_3_Sagsa), (A_4_3_Sagsa, 'fiesta', A_4_3_Sagsa), (A_4_3_Sagsa, 'salir', A_4_4_Carulla),
+                    (A_3_2_Cupo, 'casa', A_3_3_Caminar), (A_3_2_Cupo, 'amigo', A_4_Amigo)
                      ])
 
 
-def playStory(automaton = DFA, q0 = State, winning_state = State, acceptance_states = [], losing_states=[]): 
+def playStory(automaton = DFA, q0 = State, winning_states = [], acceptance_states = [], losing_states=[]): 
     automatonDict=automaton.to_dict()
     
     actual_state = q0
@@ -128,20 +106,19 @@ def playStory(automaton = DFA, q0 = State, winning_state = State, acceptance_sta
         options=automatonDict.get(actual_state)
         print("caminos: ", options)
         entry=input("entrada: ")
-        try:
-            for i in options: 
-                if(i==entry): 
-                    actual_state=options.get(i)
-                    print("nuevo estado: ", actual_state)
-                    path.append(entry)   
-        except: 
+        
+        for i in options: 
+            if(i==entry): 
+                actual_state=options.get(i)
+                print("nuevo estado: ", actual_state)
+                path.append(entry)   
+ 
             print("entrada erronea")
-            
         if(actual_state==q0): 
             print("volviste al inicio")
         elif(actual_state in losing_states): 
             print("no llegaste a tu casa")
-        elif(actual_state==winning_state): 
+        elif(actual_state in winning_states): 
             print("llegaste a tu casa")
 
     print(path)
@@ -202,7 +179,6 @@ def generar_cadena(cfg, simbolo_inicial):
     return cadena
 
 
-playStory(dfa, q0, estado_ganador, estados_aceptacion, estados_perdedores)
+playStory(dfa, q0, estados_ganadores, estados_aceptacion, estados_perdedores)
 cadena_generada = generar_cadena(gic, S)
 print("Cadena generada:", cadena_generada)
-    
