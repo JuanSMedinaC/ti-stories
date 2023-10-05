@@ -117,7 +117,7 @@ def playStory(automaton = DFA, q0 = State, winning_states = [], acceptance_state
             print("volviste al inicio")
         elif(actual_state in losing_states): 
             print("no llegaste a tu casa")
-        elif(actual_state==winning_states): 
+        elif(actual_state in winning_states): 
             print("llegaste a tu casa")
 
     print(path)
