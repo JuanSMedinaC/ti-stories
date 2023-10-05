@@ -1,6 +1,13 @@
 #!pip install pyformlang
 from pyformlang.finite_automaton import State
 from pyformlang.finite_automaton import DeterministicFiniteAutomaton as DFA
+import csv
+
+with open('docs/Story.csv',newline='') as pscfile:
+    reader = csv.reader(pscfile)
+    next(reader)
+    nfaStates = dict(reader)
+
 
 
 
