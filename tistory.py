@@ -12,7 +12,6 @@ with open('docs/Story.csv',newline='') as pscfile:
     next(reader)
     nfaStates = dict(reader)
 
-print(nfaStates.get('A_4_3_Sagsax'))
 
 q0=State('q0')
 q1=State('q1')
@@ -115,7 +114,6 @@ def playStory(automaton = DFA, q0 = State, winning_states = [], acceptance_state
     
     while(actual_state not in acceptance_states):
         options=automatonDict.get(actual_state)
-        print("caminos: ", options)
         if (actual_state=='q0'):
             print('Como te llamas?')
         else:
@@ -127,7 +125,6 @@ def playStory(automaton = DFA, q0 = State, winning_states = [], acceptance_state
         for i in options: 
             if(re.search(rf"\b{i}\b", entry, re.IGNORECASE)): 
                 actual_state=options.get(i)
-                print("nuevo estado: ", actual_state)
                 path.append(i)
         if(options==automatonDict.get(actual_state)): #verifica que el estado haya cambiado, de no ser asi es que la entrada no es correcta
             print("entrada erronea")       
@@ -140,8 +137,6 @@ def playStory(automaton = DFA, q0 = State, winning_states = [], acceptance_state
     if((str(actual_state) + "x") in nfaStates):
         print(nfaStates.get(str(actual_state) + "x") +  generar_cadena(gic, S))
     print(nfaStates.get(actual_state))
-    print(path)
-    print("aceptacion de ruta: ", dfa.accepts(path))
 
 
 
