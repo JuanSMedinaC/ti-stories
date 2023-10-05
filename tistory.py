@@ -2,13 +2,14 @@
 from pyformlang.finite_automaton import State
 from pyformlang.finite_automaton import DeterministicFiniteAutomaton as DFA
 import csv
+import re
 
 with open('docs/Story.csv',newline='') as pscfile:
     reader = csv.reader(pscfile)
     next(reader)
     nfaStates = dict(reader)
 
-print(nfaStates.get('q1'))
+import re
 
 
 q0=State('q0')
@@ -106,6 +107,7 @@ dfa.add_transitions([(q0, 'a', q1), (q1, 'carulla', B_1_carulla),
 def playStory(automaton = DFA, q0 = State, winning_states = [], acceptance_states = [], losing_states=[]): 
     automatonDict=automaton.to_dict()
     
+    
     actual_state = q0
     path=[]
     
@@ -117,17 +119,14 @@ def playStory(automaton = DFA, q0 = State, winning_states = [], acceptance_state
         else:
             print(nfaStates.get(actual_state))
         entry=input("entrada: ")
-        accepted= False
+        
         for i in options: 
-            if(i==entry): 
+            if(re.search(rf"\b{i}\b", entry, re.IGNORECASE)): 
                 actual_state=options.get(i)
                 print("nuevo estado: ", actual_state)
-                path.append(entry)   
-                accepted=True
-        if (accepted==False):
-            print("entrada incorrecta")
-        else:
-            accepted=False
+                path.append(i)
+        if(options==automatonDict.get(actual_state)): #verifica que el estado haya cambiado, de no ser asi es que la entrada no es correcta
+            print("entrada erronea")       
         if(actual_state==q0): 
             print("volviste al inicio")
         elif(actual_state in losing_states): 
