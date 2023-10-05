@@ -166,12 +166,23 @@ gramatica2 = CFG.from_text("""
   B -> b B | b
 """)
 
+#Gramatica para definir detalles:
+gic = CFG.from_text("""
+S -> FA 
+FA -> DetA NA VA PA DetA NAA
+NAA -> NA | NB
+DetA -> 'el' | 'un' 
+NA -> 'gato' | 'perro' | 'niño' 
+NB -> 'juguete' | 'arbol' | 'carro' | 'balon' | 'botellon' | 'colchon'
+VA -> 'juega' | 'corre' | 'duerme' | 'salta'
+PA -> 'sobre' | 'bajo' | 'cerca de' | 'junto a' | 'en'
+""")
 
 # Generar una cadena de acuerdo con la CFG
 def generar_cadena(cfg, simbolo_inicial):
     cadena = ""
     pila = [simbolo_inicial]
-
+    
     while pila:
 
         simbolo_actual = pila.pop()
@@ -193,6 +204,6 @@ def generar_cadena(cfg, simbolo_inicial):
 
 
 playStory(dfa, q0, estado_ganador, estados_aceptacion, estados_perdedores)
-cadena_generada = generar_cadena(gramatica2, S)
+cadena_generada = generar_cadena(gic, S)
 print("Cadena generada:", cadena_generada)
     
