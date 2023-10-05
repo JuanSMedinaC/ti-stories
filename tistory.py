@@ -8,7 +8,7 @@ with open('docs/Story.csv',newline='') as pscfile:
     next(reader)
     nfaStates = dict(reader)
 
-
+print(nfaStates.get('q1'))
 
 
 q0=State('q0')
@@ -112,15 +112,22 @@ def playStory(automaton = DFA, q0 = State, winning_states = [], acceptance_state
     while(actual_state not in acceptance_states):
         options=automatonDict.get(actual_state)
         print("caminos: ", options)
+        if (actual_state=='q0'):
+            print('Como te llamas?')
+        else:
+            print(nfaStates.get(actual_state))
         entry=input("entrada: ")
-        
+        accepted= False
         for i in options: 
             if(i==entry): 
                 actual_state=options.get(i)
                 print("nuevo estado: ", actual_state)
                 path.append(entry)   
- 
-            print("entrada erronea")
+                accepted=True
+        if (accepted==False):
+            print("entrada incorrecta")
+        else:
+            accepted=False
         if(actual_state==q0): 
             print("volviste al inicio")
         elif(actual_state in losing_states): 
