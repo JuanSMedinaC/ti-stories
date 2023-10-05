@@ -5,7 +5,6 @@ from pyformlang.finite_automaton import NondeterministicFiniteAutomaton
 q0=State('q0')
 A_1_Seleccion_de_transporte = State('A_1_Seleccion_de_transporte')
 A_2_MIO = State('A_2_MIO')
-A_3_Cupo = State ('A_3_Cupo')
 A_3_1_Cupo = State ('A_3_1_Cupo')
 A_3_2_Cupo = State ('A_3_2_Cupo')
 A_3_3_Caminar = State ('A_3_3_Caminar')
@@ -47,25 +46,25 @@ from pyformlang.finite_automaton import DeterministicFiniteAutomaton as DFA
 
 q0=State('q0')
 q1=State('q1')
-B_1_carulla=State('B1')
-B_2_nuevosAmigos=State('B2')
-B_3_celular=State('B3')
-B_4_cervezas=State('B4')
-B_5_retirada=State('B5')
-B_6_vomito=State('B6')
-B_7_taxi=State('B7')
-B_8_dormir=State('B8')
-B_9_caminar=State('B9')
-B_10_montarse=State('B10')
-B_11_ignorado=State('B11')
-B_12_robo=State('B12')
-B_13_final=State('B13')
-B_14_amigo=State('B14')
-B_15_fifa=State('B15')
-B_16_partida=State('B16')
-B_17_uber=State('B17')
-B_18_solo=State('B18')
-B_19_muerte=State('B19')
+B_1_carulla=State('B_1_carulla')
+B_2_nuevosAmigos=State('B_2_nuevosAmigos')
+B_3_celular=State('B_3_celular')
+B_4_cervezas=State('B_4_cervezas')
+B_5_retirada=State('B_5_retirada')
+B_6_vomito=State('B_6_vomito')
+B_7_taxi=State('B_7_taxi')
+B_8_dormir=State('B_8_dormir')
+B_9_caminar=State('B_9_caminar')
+B_10_montarse=State('B_10_montarse')
+B_11_ignorado=State('B_11_ignorado')
+B_12_robo=State('B_12_robo')
+B_13_final=State('B_13_final')
+B_14_amigo=State('B_14_amigo')
+B_15_fifa=State('B_15_fifa')
+B_16_partida=State('B_16_partida')
+B_17_uber=State('B_17_uber')
+B_18_solo=State('B_18_solo')
+B_19_muerte=State('B_19_muerte')
 
 
 dfa= DFA(
@@ -182,7 +181,7 @@ PA -> 'sobre' | 'bajo' | 'cerca de' | 'junto a' | 'en'
 def generar_cadena(cfg, simbolo_inicial):
     cadena = ""
     pila = [simbolo_inicial]
-    
+
     while pila:
 
         simbolo_actual = pila.pop()
