@@ -155,11 +155,11 @@ gic = CFG.from_text("""
 S -> FA 
 FA -> DetA NA VA PA DetA NAA
 NAA -> NA | NB
-DetA -> 'el' | 'un' 
-NA -> 'gato' | 'perro' | 'niño' 
-NB -> 'juguete' | 'arbol' | 'carro' | 'balon' | 'botellon' | 'colchon'
-VA -> 'juega' | 'corre' | 'duerme' | 'salta'
-PA -> 'sobre' | 'bajo' | 'cerca de' | 'junto a' | 'en'
+DetA -> el | un 
+NA -> gato | perro | niño 
+NB -> juguete | arbol | carro | balon | botellon | colchon
+VA -> juega | corre | duerme | salta
+PA -> sobre | bajo | cerca de | junto a | en
 """)
 
 # Generar una cadena de acuerdo con la CFG
@@ -173,7 +173,7 @@ def generar_cadena(cfg, simbolo_inicial):
         print("simbolo actual: ", simbolo_actual)
 
         if isinstance(simbolo_actual, Terminal):
-            cadena += simbolo_actual.value
+            cadena += simbolo_actual.value + " "
             print("cadena hasta el momento: ", cadena)
         elif isinstance(simbolo_actual, Variable):
             producciones_posibles = [p for p in cfg.productions if p.head == simbolo_actual]
