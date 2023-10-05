@@ -1,7 +1,7 @@
 #!pip install pyformlang
 from pyformlang.finite_automaton import State
 from pyformlang.finite_automaton import DeterministicFiniteAutomaton as DFA
-
+import re
 
 
 q0=State('q0')
@@ -98,6 +98,7 @@ dfa.add_transitions([(q0, 'a', q1), (q1, 'carulla', B_1_carulla),
 def playStory(automaton = DFA, q0 = State, winning_states = [], acceptance_states = [], losing_states=[]): 
     automatonDict=automaton.to_dict()
     
+    
     actual_state = q0
     path=[]
     
@@ -107,12 +108,12 @@ def playStory(automaton = DFA, q0 = State, winning_states = [], acceptance_state
         entry=input("entrada: ")
         
         for i in options: 
-            if(i==entry): 
+            if(re.search(rf"\b{i}\b", entry, re.IGNORECASE)): 
                 actual_state=options.get(i)
                 print("nuevo estado: ", actual_state)
-                path.append(entry)   
- 
-            print("entrada erronea")
+                path.append(i)
+        if(options==automatonDict.get(actual_state)): #verifica que el estado haya cambiado, de no ser asi es que la entrada no es correcta
+            print("entrada erronea")       
         if(actual_state==q0): 
             print("volviste al inicio")
         elif(actual_state in losing_states): 
