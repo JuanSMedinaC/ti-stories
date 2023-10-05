@@ -105,6 +105,12 @@ dfa.add_transitions([(q0, 'a', q1), (q1, 'carulla', B_1_carulla),
                      ])
 
 
+def checkRegEx(expresion, entry):
+    if(re.search(expresion, entry, re.IGNORECASE)): 
+        return True
+    return False
+
+
 def playStory(automaton = DFA, q0 = State, winning_states = [], acceptance_states = [], losing_states=[] , gic=CFG): 
     automatonDict=automaton.to_dict()
     
@@ -123,7 +129,7 @@ def playStory(automaton = DFA, q0 = State, winning_states = [], acceptance_state
         entry=input("entrada: ")
 
         for i in options: 
-            if(re.search(rf"\b{i}\b", entry, re.IGNORECASE)): 
+            if(checkRegEx(rf"\b{i}\b", entry)): 
                 actual_state=options.get(i)
                 path.append(i)
         if(options==automatonDict.get(actual_state)): #verifica que el estado haya cambiado, de no ser asi es que la entrada no es correcta
@@ -137,6 +143,7 @@ def playStory(automaton = DFA, q0 = State, winning_states = [], acceptance_state
     if((str(actual_state) + "x") in nfaStates):
         print(nfaStates.get(str(actual_state) + "x") +  generar_cadena(gic, S))
     print(nfaStates.get(actual_state))
+    return (actual_state)
 
 
 
@@ -153,10 +160,10 @@ S -> FA
 FA -> Pi PA P
 Pi -> SINi | PLURi
 P -> SIN | PLUR
-SINi ->  DetA NA VA
-PLURi -> DetAs NAs VAs                   
-SIN -> DetA NB
-PLUR -> DetAs NBs
+SINi -> DetA NA VA
+PLURi -> DetAs  NAs  VAs                   
+SIN -> DetA  NB
+PLUR -> DetAs  NBs
 NAA -> NA | NB
 DetA -> un 
 DetAs -> unos
@@ -190,5 +197,6 @@ def generar_cadena(cfg, simbolo_inicial):
 
 
 playStory(dfa, q0, estados_ganadores, estados_aceptacion, estados_perdedores, gic)
-cadena_generada = generar_cadena(gic, S)
+#cadena_generada = generar_cadena(gic, S)
+
 #print("Cadena generada:", cadena_generada)
