@@ -13,7 +13,7 @@ with open('docs/Story.csv',newline='') as pscfile:
     next(reader)
     nfaStates = dict(reader)
 
-
+#el transductor se crea en funcion de la entrada del cliente. 
 def nameChanger(name, default):
     if name == "": 
         return ""
@@ -151,44 +151,53 @@ def checkRegEx(expresion, entry):
 
 def playStory(automaton = DFA, q0 = State, winning_states = [], acceptance_states = [], losing_states=[] , gic=CFG): 
     automatonDict=automaton.to_dict()
-    
-    actual_state = q0
-    path=[]
-    
-    while(actual_state not in acceptance_states):
-        options=automatonDict.get(actual_state)
-        if (actual_state==q0):
-            name=input('Como te llamas?')
-            default="jugador123456789101112131415161718192021222324252627282930"
-            firstResponse="Hola " + nameChanger(name, default) + "! Empieza el juego!"
-            print(firstResponse)
-            print("escribe \'a\' para empezar!")
-                 
-        else:
-            if((str(actual_state) + "x") in nfaStates):
-                print(nfaStates.get(str(actual_state) + "x") +  generar_cadena(gic, S))
-            print(nfaStates.get(actual_state))
-        entry=input("entrada: ")
+    while(True):
+        actual_state = q0
+        path=[]
+        
+        while(actual_state not in acceptance_states):
+            options=automatonDict.get(actual_state)
+            if (actual_state==q0):
+                name=input('Como te llamas?')
+                default="jugador123456789101112131415161718192021222324252627282930"
+                firstResponse="Hola " + nameChanger(name, default) + "! Empieza el juego!"
+                print('El objetivo es llegar a tu casa. Puedes escoger realizar las actividades que desees pero recuerda que hay que llegar a la casa.')
+                print(firstResponse)
+                print("escribe \'a\' para empezar!")
+                    
+            else:
+                if((str(actual_state) + "x") in nfaStates):
+                    print(nfaStates.get(str(actual_state) + "x") +  generar_cadena(gic, S))
+                print(nfaStates.get(actual_state))
+            entry=input("entrada: ")
 
-        for i in options: 
-            if(checkRegEx(rf"\b{i}\b", entry)): 
-                actual_state=options.get(i)
-                path.append(i)
-        if(options==automatonDict.get(actual_state)): #verifica que el estado haya cambiado, de no ser asi es que la entrada no es correcta
-            print("entrada erronea")       
-        if(actual_state==q0): 
-            print("volviste al inicio")
-        elif(actual_state in losing_states): 
-            print("no llegaste a tu casa")
-        elif(actual_state in winning_states): 
-            print("llegaste a tu casa")
+            for i in options: 
+                if(checkRegEx(rf"\b{i}\b", entry)): 
+                    actual_state=options.get(i)
+                    path.append(i)
+            if(options==automatonDict.get(actual_state)): #verifica que el estado haya cambiado, de no ser asi es que la entrada no es correcta
+                print("entrada erronea")       
+            if(actual_state==q0): 
+                print("volviste al inicio")
+            elif(actual_state in losing_states): 
+                print("no llegaste a tu casa")
+            elif(actual_state in winning_states): 
+                print("llegaste a tu casa")
+            print()
+            print()
+
+        if((str(actual_state) + "x") in nfaStates):
+            print(nfaStates.get(str(actual_state) + "x") +  generar_cadena(gic, S))
+        print(nfaStates.get(actual_state))
         print()
-        print()
-            
-    if((str(actual_state) + "x") in nfaStates):
-        print(nfaStates.get(str(actual_state) + "x") +  generar_cadena(gic, S))
-    print(nfaStates.get(actual_state))
-    return (actual_state)
+        resp=input("desea volver a jugar?      SI o NO:     ")
+        if(re.search(r'\bno\b' ,resp, re.IGNORECASE)):
+            return (actual_state)
+            break
+    
+    
+        
+    
 
 
 
