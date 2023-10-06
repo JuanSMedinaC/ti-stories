@@ -3,11 +3,11 @@ q1,"Es viernes y  tuviste una semana muy pesada quieres
 relajarte un rato, pero por tu cabeza pasan dos posibles opciones:
 1. Buscar transporte para irte
 2. Ir a carulla a parchar mientras baja el trancon"
-A_1_Seleccion_de_transporte,"Empiezas a contemplar como podrías irte a tu casa
+A_1_Seleccion_de_transporte,"Empiezas a contemplar como podrias irte a tu casa
 y a tu mente llegan tres opciones:
 1. Tomar el bus del MIO
 2. Esperar un cupo
-3. Irte con tu amigo el fiestero que ofreció llevarte"
+3. Irte con tu amigo el fiestero que ofrecio llevarte"
 A_2_MIO,"Decides tomar el MIO, sin embargo te das cuenta que es una
 mala decision pues el bus se empieza a detener al poco tiempo
 de subirte.
@@ -28,18 +28,18 @@ das cuenta de que has perdido la noción del tiempo. La fiesta
 en ""1060"" sigue y sigue. Te enfrentas a decisiones como:
 1. Seguir disfrutando de la fiesta.
 2. Intentar salir de la fiesta para finalmente llegar a casa."
-A_4_3_Sagsa.,"Intentas salir de la fiesta en ""1060"", pero te encuentras con 
-más obstáculos y distracciones en el camino incluso ves a lo 
+A_4_3_Sagsax,"Intentas salir de la fiesta en ""1060"", pero te encuentras con 
+mas obstaculos y distracciones en el camino incluso ves a lo 
 lejos como "
 A_4_3_Sagsa,"Te  terminas uniendo a la fiesta en ""Sagsa"" y la noche se 
 vuelve más loca de lo que imaginabas.
 La fiesta se pone salvaje, y te enfrentas a decisiones como:
 1. Seguir la fiesta en ""Sagsa"".
 2. Intentar regresar a casa en medio de la locura."
-A_4_4_Carulla.,"Todo el camino es distinguiblemente el camino a tu casa, 
-sin embargo cada vez que vas a llegar y das el último giro 
+A_4_4_Carullax,"Todo el camino es distinguiblemente el camino a tu casa, 
+sin embargo cada vez que vas a llegar y das el ultimo giro 
 apareces en Carulla mientras "
-A_4_4_Carulla,"Lo intentaste, quizás fue mayor el deseo de pasar un buen rato
+A_4_4_Carulla,"Lo intentaste, quizas fue mayor el deseo de pasar un buen rato
 que subconscientemente te gano y te trajo a parchar en Carulla."
 A_3_2_Cupo,"Decidiste continuar en el cupo, duermes un rato y te despiertas 
 muy cerca a tu casa. Sin embargo estás tan cansado que tus 
@@ -47,26 +47,26 @@ ojos se empiezan a cerrar.
 Cuando vuelves a levantarte estás un poco más lejos.
 1. Caminas hasta llegar a tu casa.
 2. Te quedas esperando a que llegue tu amigo fiestero a recogerte y llevarte a tu casa"
-A_3_3_Caminar,"Después de un rato logras llegar a tu casa, y tomar un 
+A_3_3_Caminar,"Despues de un rato logras llegar a tu casa, y tomar un 
 merecido descanso felicitaciones tienes tu recompensa.
 "
 B_1_carulla,"Me encuentro un grupo de personas en carulla, sin embargo
 son desconocidos:
 1. Intento socializar y pongo conversacion
 2. Me quedo mirando el celular y no hablo con nadie"
-B_2_nuevosAmigos,"Me presento y me incluyen en su grupo.
-Me dicen de poner 10mil para comprar cerveza.
-1. aceptar 
+B_2_nuevosAmigos,"Te presentas y te incluyen en su grupo.
+te dicen de poner 10mil para comprar cerveza.
+1. aceptar
 2. negarme"
-B_3_celular.,"Me quedo usando el celular hasta que veo que me quedaré 
-sin pila mientras estoy viendo un video de como"
-B_3_celular,"Considero dos opciones:
+B_3_celularx,"Te quedas usando el celular hasta que ves que te vas a 
+quedar sin pila mientras estoy viendo un video de como"
+B_3_celular,"Consideras dos opciones:
 1. Pedir un uber
 2. Buscar a algun amigo que pueda llevarme"
-B_4_cervezas,"Doy la plata y empiezo a tomar hasta ponerme un poco mal
-1. retirarme
+B_4_cervezas,"Das la plata y empiezas a tomar hasta ponerte un poco mal
+1. retirarse
 2. tomar mas"
-B_5_retirada.,"Te retiras buscando llegar a la casa pero el mio ya cerró miras 
+B_5_retiradax,"Te retiras buscando llegar a la casa pero el mio ya cerró miras 
 hacia la estación y solo ves como
 "
 B_5_retirada,"Entonces tienes tres opciones:
@@ -90,7 +90,7 @@ B_10_montarse,"Te pones de acuerdo con el loquito y te lleva en su carreta. Desp
 de un rato te preguntas que tan seguro es lo que estas haciendo. 
 1. seguir en la carreta
 2. saltar y correr"
-B_11_ignorado.,"El loco se siente discriminado por ingorarlo y procede a chuzarte 
+B_11_ignoradox,"El loco se siente discriminado por ingorarlo y procede a chuzarte 
 hasta morir. Mientras tanto cerca tuyo"
 B_11_ignorado,Es seguro que no llegaste a tu casa.
 B_12_robo,"De alguna forma esto sale bien y decides volverte habitante de 

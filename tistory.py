@@ -1,14 +1,54 @@
 #!pip install pyformlang
 from pyformlang.finite_automaton import State
 from pyformlang.finite_automaton import DeterministicFiniteAutomaton as DFA
+from pyformlang.fst import FST
 import csv
+import re
+
+from pyformlang.cfg import CFG, Production, Variable, Terminal
+import random
 
 with open('docs/Story.csv',newline='') as pscfile:
     reader = csv.reader(pscfile)
     next(reader)
     nfaStates = dict(reader)
 
-import re
+
+def nameChanger(name, default):
+    if name == "": 
+        return ""
+    else: 
+        listDefault=list(default)
+        listName=list(name)
+        fst=FST()
+        fst.add_start_state('f0')
+        if len(name)<len(default):
+            count=0
+            for i in name:
+                fst.add_transition('f'+str(count), default[count], 'f'+str(count+1), [name[count]])
+                count+=1
+            for i in range(count, len(default)):
+                fst.add_transition('f'+str(count), default[count], 'f'+str(count+1), [''])
+                count+=1
+            fst.add_final_state('f'+str(count))
+        elif len(name)>len(default):
+            count=0
+            for i in default:
+                fst.add_transition('f'+str(count), default[count], 'f'+str(count+1), [name[count]])
+                count+=1
+            for i in range(count, len(name)):
+                fst.add_transition('f'+str(count), "", 'f'+str(count+1), [name[count]])
+                count+=1
+            fst.add_final_state('f'+str(count))
+        else:
+            count=0
+            for i in name:
+                fst.add_transition('f'+str(count), default[count], 'f'+str(count+1), [name[count]])
+                count+=1
+            fst.add_final_state('f'+str(count))
+        result=fst.translate(default)
+        return "".join(list(result)[0])
+
 
 
 q0=State('q0')
@@ -49,10 +89,10 @@ dfa= DFA(
     states={q0, q1, B_1_carulla, B_2_nuevosAmigos, B_3_celular, B_4_cervezas, B_5_retirada, B_6_vomito, B_7_taxi, B_8_dormir, B_9_caminar, B_10_montarse, B_11_ignorado, B_12_robo, B_13_final, B_14_amigo, B_15_fifa, B_16_partida, B_17_uber, B_18_solo, B_19_muerte, A_1_Seleccion_de_transporte , A_2_MIO , A_3_Cupo , A_3_1_Cupo , A_3_2_Cupo , A_3_3_Caminar , A_4_Amigo , A_4_1_1060 , A_4_3_Sagsa , A_4_4_Carulla},
     input_symbols={'carulla', 'socializar', 'aceptar', 'negarse', 'retirarse', 'tomar', 'dormir', 'taxi', 'caminar', 'montarse', 'ignorar', 'golpear', 'saltar', 'seguir', 'celular', 'uber', 'amigo', 'dedo', 'fifa', 'revancha', 'transporte', 'MIO', 'cupo', '1060', 'sagsa', 'casa', 'fiesta', 'salir'},
     start_state=q0,
-    final_states={B_6_vomito, B_7_taxi, B_8_dormir, B_11_ignorado, B_12_robo, B_15_fifa, B_18_solo, B_19_muerte, A_4_1_1060, A_4_3_Sagsa, A_4_4_Carulla}
+    final_states={B_6_vomito, B_7_taxi, B_8_dormir, B_11_ignorado, B_12_robo, B_15_fifa, B_18_solo, B_19_muerte, A_4_4_Carulla}
 )
 
-estados_perdedores=[B_6_vomito, B_7_taxi, B_8_dormir, B_11_ignorado, B_12_robo, B_15_fifa, B_18_solo, B_19_muerte, A_4_1_1060, A_4_3_Sagsa, A_4_4_Carulla]
+estados_perdedores=[B_6_vomito, B_7_taxi, B_8_dormir, B_11_ignorado, B_12_robo, B_15_fifa, B_18_solo, B_19_muerte, A_4_4_Carulla]
 estados_ganadores=[B_13_final, A_3_3_Caminar]
 estados_aceptacion=[]
 estados_aceptacion.extend(estados_perdedores)
@@ -98,27 +138,41 @@ dfa.add_transitions([(q0, 'a', q1), (q1, 'carulla', B_1_carulla),
                      (q1,'transporte',A_1_Seleccion_de_transporte),(A_1_Seleccion_de_transporte, 'MIO', A_2_MIO),(A_1_Seleccion_de_transporte, 'cupo', A_3_1_Cupo), (A_1_Seleccion_de_transporte, 'amigo', A_4_Amigo),
                     (A_2_MIO,'MIO', A_2_MIO),(A_2_MIO, 'cupo', A_3_1_Cupo),(A_3_1_Cupo, 'dormir', A_3_2_Cupo), (A_3_1_Cupo, 'amigo', A_4_Amigo),  (A_2_MIO, 'amigo', A_4_Amigo),
                     (A_4_Amigo, '1060', A_4_1_1060),(A_4_Amigo, 'sagsa', A_4_3_Sagsa), (A_4_Amigo, 'casa', A_4_4_Carulla),
-                    (A_4_1_1060, 'fiesta', A_4_1_1060),(A_4_1_1060, 'salir', A_4_3_Sagsa), (A_4_3_Sagsa, 'fiesta', A_4_3_Sagsa), (A_4_3_Sagsa, 'salir', A_4_4_Carulla),
+                    (A_4_1_1060, 'fiesta', A_4_1_1060),(A_4_1_1060, 'salir', A_4_3_Sagsa), (A_4_3_Sagsa, 'fiesta', A_4_3_Sagsa), (A_4_3_Sagsa, 'casa', A_4_4_Carulla),
                     (A_3_2_Cupo, 'casa', A_3_3_Caminar), (A_3_2_Cupo, 'amigo', A_4_Amigo)
                      ])
 
 
-def playStory(automaton = DFA, q0 = State, winning_states = [], acceptance_states = [], losing_states=[]): 
+def checkRegEx(expresion, entry):
+    if(re.search(expresion, entry, re.IGNORECASE)): 
+        return True
+    return False
+
+
+def playStory(automaton = DFA, q0 = State, winning_states = [], acceptance_states = [], losing_states=[] , gic=CFG): 
     automatonDict=automaton.to_dict()
-    
     
     actual_state = q0
     path=[]
     
     while(actual_state not in acceptance_states):
         options=automatonDict.get(actual_state)
-        print("caminos: ", options)
+        if (actual_state==q0):
+            name=input('Como te llamas?')
+            default="jugador123456789101112131415161718192021222324252627282930"
+            firstResponse="Hola " + nameChanger(name, default) + "! Empieza el juego!"
+            print(firstResponse)
+            print("escribe \'a\' para empezar!")
+                 
+        else:
+            if((str(actual_state) + "x") in nfaStates):
+                print(nfaStates.get(str(actual_state) + "x") +  generar_cadena(gic, S))
+            print(nfaStates.get(actual_state))
         entry=input("entrada: ")
-        
+
         for i in options: 
-            if(re.search(rf"\b{i}\b", entry, re.IGNORECASE)): 
+            if(checkRegEx(rf"\b{i}\b", entry)): 
                 actual_state=options.get(i)
-                print("nuevo estado: ", actual_state)
                 path.append(i)
         if(options==automatonDict.get(actual_state)): #verifica que el estado haya cambiado, de no ser asi es que la entrada no es correcta
             print("entrada erronea")       
@@ -128,38 +182,47 @@ def playStory(automaton = DFA, q0 = State, winning_states = [], acceptance_state
             print("no llegaste a tu casa")
         elif(actual_state in winning_states): 
             print("llegaste a tu casa")
+        print()
+        print()
+            
+    if((str(actual_state) + "x") in nfaStates):
+        print(nfaStates.get(str(actual_state) + "x") +  generar_cadena(gic, S))
+    print(nfaStates.get(actual_state))
+    return (actual_state)
 
-    print(path)
-    print("aceptacion de ruta: ", dfa.accepts(path))
+
+
+
 
 
 
 
 #generador de historias a partir de una gramatica
 
-from pyformlang.cfg import CFG, Production, Variable, Terminal
-import random
-
 # Definir una gramática independiente del contexto (CFG)
 S = Variable("S")
 
 
-gramatica2 = CFG.from_text("""
-  S -> A B
-  A -> a A | a
-  B -> b B | b
-""")
-
 #Gramatica para definir detalles:
 gic = CFG.from_text("""
 S -> FA 
-FA -> DetA NA VA PA DetA NAA
+FA -> Pi PA P
+Pi -> SINi | PLURi
+P -> SIN | PLUR
+SINi -> DetA NA VA
+PLURi -> DetAs  NAs  VAs                   
+SIN -> DetA  NB
+PLUR -> DetAs  NBs
 NAA -> NA | NB
-DetA -> el | un 
-NA -> gato | perro | niño 
+DetA -> un 
+DetAs -> unos
+NA -> gato | perro | niño
+NAs -> gatos | perros | niños
 NB -> juguete | arbol | carro | balon | botellon | colchon
+NBs -> juguetes | arboles | carros | balones | botellones | colchones
 VA -> juega | corre | duerme | salta
-PA -> sobre | bajo | cerca de | junto a | en
+VAs -> juegan | corren | duermen | saltan
+PA -> sobre | bajo | cerca de | junto a | con
 """)
 
 # Generar una cadena de acuerdo con la CFG
@@ -170,23 +233,23 @@ def generar_cadena(cfg, simbolo_inicial):
     while pila:
 
         simbolo_actual = pila.pop()
-        print("simbolo actual: ", simbolo_actual)
 
         if isinstance(simbolo_actual, Terminal):
             cadena += simbolo_actual.value + " "
-            print("cadena hasta el momento: ", cadena)
+            #print("cadena hasta el momento: ", cadena)
         elif isinstance(simbolo_actual, Variable):
             producciones_posibles = [p for p in cfg.productions if p.head == simbolo_actual]
-            print("producciones posibles: ", producciones_posibles)
             if producciones_posibles:
                 produccion = random.choice(producciones_posibles)
                 pila.extend(reversed(produccion.body))
-                print("produccion escogida y anadida a la pila: ", produccion.body)
-        print()
 
     return cadena
 
 
-playStory(dfa, q0, estados_ganadores, estados_aceptacion, estados_perdedores)
-cadena_generada = generar_cadena(gic, S)
-print("Cadena generada:", cadena_generada)
+
+
+
+playStory(dfa, q0, estados_ganadores, estados_aceptacion, estados_perdedores, gic)
+#cadena_generada = generar_cadena(gic, S)
+
+#print("Cadena generada:", cadena_generada)
