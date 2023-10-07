@@ -1,19 +1,31 @@
+import sys
+sys.path.append(r'c:\Users\dvb20\OneDrive\Documents\Universidad\6to\Discretas III\TI 1\ti-stories')
 import unittest
 from unittest.mock import patch
-from .. import tistory
-from tistory import checkRegEx
+from application.tistory import checkRegEx, nameChanger, generar_cadena, playStory
+from application.tistory import gic, S
 
 
 class storyTests(unittest.TestCase):
 
     def testRegEx(self):
         regex = rf"\buber\b"
-        self.assertTrue(tistory.checkRegEx(regex,"Buscar uber"))
+        self.assertTrue(checkRegEx(regex,"Buscar uber"))
 
         regex = rf"\bamigo"
-        self.asserFalse(tistory.checkRegEx(regex,"Irte con fiestero"))
+        self.asserFalse(checkRegEx(regex,"Irte con fiestero"))
 
-    #def testAutomaton(self):
+    @patch('builtins.input', side_effect=["Luis", "a", "Buscar transporte", "esperar un cupo", "dormir en el cupo", "caminar hasta casa", "Q"])
+    def test_run(self, mock_input):
+        automata = playStory()
+
+        with unittest.mock.patch('sys.stdout', new_callable=unittest.mock.StringIO) as mock_stdout:
+            automata.run()
+
+        output = mock_stdout.getvalue().strip()
+        expected_output = """A_3_3_Caminar"""
+
+        self.assertEqual(output, expected_output)
 
     def testGrammar(self):
         grammar_phrases = [
@@ -266,7 +278,13 @@ class storyTests(unittest.TestCase):
         "un niño salta con un colchon"]
 
         for i in grammar_phrases:
-            self.assertIn(tistory.generar_cadena(tistory.gic, tistory.s), grammar_phrases(i))
+            self.assertIn(generar_cadena(gic, S), grammar_phrases(i))
 
+    @patch('builtins.input', side_effect=["Luis"])
     def testTranducer(self):
-        name=change_name
+        changer = nameChanger("jugador123456789101112131415161718192021222324252627282930")
+        result = changer.namechanger()
+        self.assertEqual(result, "Luis")
+
+if __name__== '__main__':
+    unittest.main()
