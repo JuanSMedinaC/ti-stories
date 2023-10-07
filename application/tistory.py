@@ -18,7 +18,7 @@ def nameChanger(name, default):
     if name == "": 
         return ""
     else: 
-        listDefault=list(default)
+        x=list(default)
         listName=list(name)
         fst=FST()
         fst.add_start_state('f0')
@@ -158,7 +158,8 @@ def playStory(automaton = DFA, q0 = State, winning_states = [], acceptance_state
         while(actual_state not in acceptance_states):
             options=automatonDict.get(actual_state)
             if (actual_state==q0):
-                name=input('Como te llamas?')
+                print('Como te llamas?')
+                name=input()
                 default="jugador123456789101112131415161718192021222324252627282930"
                 firstResponse="Hola " + nameChanger(name, default) + "! Empieza el juego!"
                 print('El objetivo es llegar a tu casa. Puedes escoger realizar las actividades que desees pero recuerda que hay que llegar a la casa.')
@@ -169,7 +170,8 @@ def playStory(automaton = DFA, q0 = State, winning_states = [], acceptance_state
                 if((str(actual_state) + "x") in nfaStates):
                     print(nfaStates.get(str(actual_state) + "x") +  generar_cadena(gic, S))
                 print(nfaStates.get(actual_state))
-            entry=input("entrada: ")
+            print("entrada: ")
+            entry=input()
 
             for i in options: 
                 if(checkRegEx(rf"\b{i}\b", entry)): 
@@ -189,8 +191,8 @@ def playStory(automaton = DFA, q0 = State, winning_states = [], acceptance_state
         if((str(actual_state) + "x") in nfaStates):
             print(nfaStates.get(str(actual_state) + "x") +  generar_cadena(gic, S))
         print(nfaStates.get(actual_state))
-        print()
-        resp=input("desea volver a jugar?      SI o NO:     ")
+        print("desea volver a jugar?      SI o NO:     ")
+        resp=input()
         if(re.search(r'\bno\b' ,resp, re.IGNORECASE)):
             return (actual_state)
             break

@@ -306,6 +306,14 @@ Clase|Métodos|Escenario|Valores de Entrada|Resultado|
 | TiStory | checkRegEx | TestStory | "Buscar Uber" | The RE searches for one of the input symbols in the input from the user |
 | TiStory | chackRegEx | TestStory | "Irte con fiestero" | The RE fails to recognize anything so it doesn´t accepts it |
 
+## Tests for gramatics
+Receives *a phrase such as un gato salta sobre un colchon* and verifies that is in the list of gramatic generated phrases.
+
+Clase|Métodos|Escenario|Valores de Entrada|Resultado|
+|----|----|----|----|-----|
+| TiStory | checkRegEx | TestStory | "un gato salta sobre un colchon" | Asserts on the test  |
+| TiStory | chackRegEx | TestStory | "Un tigre corre sobre un avion" | The phrase can't be found on the list so it returns false. |
+
 
 ## Test for transductor
 Default = "jugador123456789101112131415161718192021222324252627282930"
