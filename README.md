@@ -18,5 +18,8 @@ El uso del programa se debe hace a partir de la escritura de respuestas como se 
   #### RESPUESTA
   ------------------
   Esperar un cupo
-  
+
+## IDE y Tests
+El IDE utilizado fue visual studio code, a la hora de ejecutar las pruebas se hizo la ejecución a través de la terminal del mismo desde el folder ti-stories con el comando python -m unittest discover
+#### Anotación (Los tests solicitan inputs, sin embargo, sin importar al final que se llegue el utilizará el caso definido en la anotación mock.patch)
 Prepárate para intentar llegar a un final y llevarte muchas sorpresas en el camino. 
